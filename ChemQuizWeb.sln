@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChemQuizWeb", "ChemQuizWeb\ChemQuizWeb.csproj", "{E01551E7-7413-4FBD-852D-D12A2AB2640B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E01551E7-7413-4FBD-852D-D12A2AB2640B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E01551E7-7413-4FBD-852D-D12A2AB2640B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E01551E7-7413-4FBD-852D-D12A2AB2640B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E01551E7-7413-4FBD-852D-D12A2AB2640B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8BF1316B-FD0D-4450-9A46-642F9FDEBFEA}
+	EndGlobalSection
+EndGlobal
