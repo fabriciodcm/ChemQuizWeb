@@ -16,8 +16,12 @@ namespace ChemQuizWeb.Data
         {
             base.OnModelCreating(builder);
         }
-        public DbSet<Avatar> Avatar { get; set; }
-        public DbSet<Category> Category { get; set; }
+        public virtual DbSet<Avatar> Avatar { get; set; }
+        public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<Game> Game { get; set; }
+        public virtual DbSet<Level> Level { get; set; }
+        public virtual DbSet<Party> Party { get; set; }
+        public virtual DbSet<Quiz> Quiz { get; set; }
 
     }
 }

@@ -11,5 +11,7 @@ namespace ChemQuizWeb.Data
     public class AppUser : IdentityUser
     {
         public long Coins { get; set; }
+        public ICollection<Game> Games { get; set; }
+        public ICollection<Party> Parties { get; set; }
     }
 }

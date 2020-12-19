@@ -124,7 +124,7 @@ namespace ChemQuizWeb.Controllers.API
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> Verify()
+        public IActionResult Verify()
         {
             return Ok(new Response { Status = "Success", Message = "User is logged!" });
         }

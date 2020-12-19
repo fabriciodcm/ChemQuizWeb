@@ -1,0 +1,82 @@
+﻿@model ChemQuizWeb.Data.Game
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <h4>Game</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GameName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GameName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GameDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GameDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Author)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Author.UserName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.GameId">Edit</a> |
+    <a asp-action="Index">Voltar</a>
+</div>
+
+<h2>Levels</h2>
+@if (Model.Levels.Count < 3)
+{
+    <p>
+        <a asp-controller="Levels" asp-action="Create" asp-route-gameid="@Model.GameId" class="btn btn-success">Criar Novo</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Level
+            </th>
+            <th>
+                Descrição
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Levels)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LevelNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LevelDescription)
+                </td>
+                <td>
+                    <a asp-controller="Levels" asp-action="Edit" asp-route-id="@item.LevelId" asp-route-gameid="@item.GameId">Edit</a> |
+                    <a asp-controller="Levels" asp-action="Details" asp-route-id="@item.LevelId" asp-route-gameid="@item.GameId">Quizzes</a> |
+                    <a asp-controller="Levels" asp-action="Delete" asp-route-id="@item.LevelId" asp-route-gameid="@item.GameId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

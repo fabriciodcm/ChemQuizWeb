@@ -1,0 +1,47 @@
+﻿@model ChemQuizWeb.Data.Level
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Level</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LevelNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LevelNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LevelDescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LevelDescription)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LevelLesson)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LevelLesson)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Game)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Game.GameId)
+        </dd class>
+    </dl>
+    
+    <form asp-action="Del">
+        <input asp-for="LevelId" type="hidden" value="@Model.LevelId" />
+        <input asp-for="GameId" type="hidden" value="@Model.GameId" />
+        <input type="submit" value="Deletar" class="btn btn-danger" /> |
+        <a asp-controller="Games" asp-action="Details" asp-route-id="@Model.GameId">Voltar</a>
+    </form>
+</div>
