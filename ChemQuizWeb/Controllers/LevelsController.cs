@@ -26,15 +26,14 @@ namespace ChemQuizWeb.Controllers
 
         // GET: Levels
         [Route("Index/{gameid}")]
-        public async Task<IActionResult> Index(int gameid)
+        public async Task<IActionResult> Index(long gameid)
         {
-            var applicationDbContext = _context.Level.Include(l => l.Game).Where(x => x.GameId == gameid);
-            return View(await applicationDbContext.ToListAsync());
+            return RedirectToAction("Details", "Games", new { id = gameid });
         }
 
         // GET: Levels/Details/5
-        [Route("Details/{gameid}/{id}")]
-        public async Task<IActionResult> Details(long? gameid, long? id)
+        [Route("Details/{id}")]
+        public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
             {
@@ -43,7 +42,9 @@ namespace ChemQuizWeb.Controllers
 
             var level = await _context.Level
                 .Include(l => l.Game)
-                .FirstOrDefaultAsync(m => m.LevelId == id);
+                .Include(l => l.Quizes)
+                .FirstOrDefaultAsync(m => m.LevelId == id
+                && m.Game.AuthorId == _userManager.GetUserId(this.User));
             if (level == null)
             {
                 return NotFound();
@@ -54,7 +55,7 @@ namespace ChemQuizWeb.Controllers
 
         // GET: Levels/Create
         [Route("Create/{gameid}")]
-        public IActionResult Create(int gameid)
+        public IActionResult Create(long gameid)
         {
             ViewBag.GameId = gameid;
             return View();

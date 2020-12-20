@@ -23,6 +23,15 @@ namespace ChemQuizWeb.Data
         public long GameId { get; set; }
         [ForeignKey("GameId")]
         public Game Game { get; set; }
-        //public ICollection<Quiz> Quizes { get; set; }
+        public ICollection<Quiz> Quizes { get; set; }
+        [Display(Name = "Level")]
+        [NotMapped]
+        public string LevelResume
+        {
+            get
+            {
+                return " Fase " + LevelNumber + " - " + LevelDescription;
+            }
+        }
     }
 }

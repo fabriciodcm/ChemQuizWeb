@@ -38,7 +38,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.GameId">Edit</a> |
     <a asp-action="Index">Voltar</a>
 </div>
 
@@ -72,9 +71,9 @@
                     @Html.DisplayFor(modelItem => item.LevelDescription)
                 </td>
                 <td>
-                    <a asp-controller="Levels" asp-action="Edit" asp-route-id="@item.LevelId" asp-route-gameid="@item.GameId">Edit</a> |
+                    <a asp-controller="Levels" asp-action="Edit" asp-route-id="@item.LevelId" asp-route-gameid="@item.GameId">Alterar</a> |
                     <a asp-controller="Levels" asp-action="Details" asp-route-id="@item.LevelId" asp-route-gameid="@item.GameId">Quizzes</a> |
-                    <a asp-controller="Levels" asp-action="Delete" asp-route-id="@item.LevelId" asp-route-gameid="@item.GameId">Delete</a>
+                    <a asp-controller="Levels" asp-action="Delete" asp-route-id="@item.LevelId" asp-route-gameid="@item.GameId">Excluir</a>
                 </td>
             </tr>
         }

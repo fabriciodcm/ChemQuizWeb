@@ -11,33 +11,76 @@
     <h4>Level</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
+            Game
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Game.GameName)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.LevelNumber)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LevelNumber)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.LevelDescription)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LevelDescription)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.LevelLesson)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LevelLesson)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Game)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Game.GameId)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-controller="Levels" asp-action="Edit" asp-route-id="@Model.LevelId" asp-route-gameid="@Model.GameId">Edit</a> |
     <a asp-controller="Games" asp-action="Details" asp-route-id="@Model.GameId">Voltar</a>
 </div>
+
+<h2>Quizes</h2>
+
+<p>
+    <a asp-controller="Quiz" asp-action="Create" asp-route-levelid="@Model.LevelId" class="btn btn-success">Criar Novo</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Questão
+            </th>
+            <th>
+                Pontos
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Quizes)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Question)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Points)
+                </td>
+                <td>
+                    <a asp-controller="Quiz" asp-action="Edit" asp-route-id="@item.QuizId" asp-route-levelid="@Model.LevelId">Alterar</a> |
+                    <a asp-controller="Quiz" asp-action="Details" asp-route-id="@item.QuizId" asp-route-levelid="@Model.LevelId">Detalhes</a> |
+                    <a asp-controller="Quiz" asp-action="Delete" asp-route-id="@item.QuizId" asp-route-levelid="@Model.LevelId">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

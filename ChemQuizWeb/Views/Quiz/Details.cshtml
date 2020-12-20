@@ -1,0 +1,66 @@
+﻿@model ChemQuizWeb.Data.Quiz
+
+@{
+    ViewData["Title"] = "Detalhes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <h4>Quiz</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Game
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Level.Game.GameName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Level.LevelResume)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Level.LevelResume)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Question)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Question)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Answer1)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Answer1)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Answer2)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Answer2)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Answer3)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Answer3)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Answer4)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Answer4)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Points)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Points)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-controller="Levels" asp-action="Details" asp-route-id="@Model.LevelId">Voltar</a>
+</div>
