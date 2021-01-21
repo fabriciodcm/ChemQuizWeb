@@ -1,0 +1,54 @@
+﻿@model ChemQuizWeb.Models.PartyGameViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Party</h1>
+
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PartyName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PartyName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PartyDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PartyDescription)
+        </dd>
+
+    </dl>
+    <h3>Tem certeza que deseja remover este game?</h3>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GameName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GameName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GameAuthor)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GameAuthor)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+    </dl>
+    <form asp-action="DeleteGameConfirmed">
+        <input type="hidden" asp-for="PartyId" />
+        <input type="hidden" asp-for="GameId" />
+        <input type="submit" value="Remover" class="btn btn-danger" /> |
+        <a asp-action="Index">Voltar</a>
+    </form>
+</div>

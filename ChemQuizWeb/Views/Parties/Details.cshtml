@@ -1,0 +1,106 @@
+﻿@model ChemQuizWeb.Data.Party
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <h4>Party</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PartyName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PartyName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PartyDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PartyDescription)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Voltar</a>
+</div>
+<h4>Games</h4>
+<div class="form-group">
+    <a asp-action="AddGame" asp-route-id="@Model.PartyId" class="btn btn-success">Adicionar Game</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+                Descrição
+            </th>
+            <th>
+                Categoria
+            </th>
+            <th>
+                Autor
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Games)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GameName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GameDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author.UserName)
+                </td>
+                <td>
+                    <a asp-action="GameStatistics" asp-route-id="@Model.PartyId" asp-route-gameid="@item.GameId">Estatísticas</a> |
+                    <a asp-action="DeleteGame" asp-route-id="@Model.PartyId" asp-route-gameid="@item.GameId">Remover</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h4>Participantes</h4>
+<div class="form-group">
+    <a asp-action="AddMember" asp-route-id="@Model.PartyId" class="btn btn-success">Adicionar Participante</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Email
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Users)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    <a asp-action="UserStatistics" asp-route-id="@Model.PartyId" asp-route-userid="@item.Id">Estatísticas</a> |
+                    <a asp-action="DeleteMember" asp-route-id="@Model.PartyId" asp-route-userid="@item.Id">Remover</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

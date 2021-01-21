@@ -37,8 +37,8 @@ namespace ChemQuizWeb
             #endregion
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    //Configuration.GetConnectionString("FabricioDocemaDBConnectionString")));
                     Configuration.GetConnectionString("ProdConnection")));
+                    //Configuration.GetConnectionString("ProdConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddDefaultIdentity<AppUser>(options =>
             {
@@ -84,9 +84,13 @@ namespace ChemQuizWeb
             services.AddRazorPages();
 
             services.AddControllersWithViews();
+            //services.AddControllersWithViews().AddJsonOptions(x => 
+            //    x.JsonSerializerOptions.Re
+            //);
 
             services.AddScoped<IService<Avatar>, AvatarService>();
             services.AddScoped<IService<Category>, CategoryService>();
+            services.AddScoped<IGameService, GameService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

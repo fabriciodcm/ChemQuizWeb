@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ChemQuizWeb.Data.Party>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Nova Party</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PartyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PartyDescription)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PartyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PartyDescription)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PartyId">Alterar</a> |
+                <a asp-action="Details" asp-route-id="@item.PartyId">Games/Participantes</a> |
+                <a asp-action="Delete" asp-route-id="@item.PartyId">Excluir</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

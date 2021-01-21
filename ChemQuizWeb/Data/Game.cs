@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ChemQuizWeb.Data
@@ -11,6 +12,7 @@ namespace ChemQuizWeb.Data
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Display(Name = "Id")]
         public long GameId { get; set; }
         [Display(Name = "Nome")]
         public string GameName { get; set; }
@@ -25,8 +27,11 @@ namespace ChemQuizWeb.Data
         public Category Category { get; set; }
         [ForeignKey("AuthorId")]
         [Display(Name = "Autor")]
+        [JsonIgnore]
         public AppUser Author { get; set; }
         public ICollection<Party> Parties { get; set; } 
         public ICollection<Level> Levels { get; set; } 
+        [NotMapped]
+        public string author { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace ChemQuizWeb.Controllers.API
 {
 
     [Route("api/[controller]")]
+    [ApiController]
     public class CategoryController : Controller
     {
         private IService<Category> categoryService;
