@@ -1,4 +1,6 @@
-﻿using ChemQuizWeb.Data;
+﻿using ChemQuizWeb.Core.Entities;
+using ChemQuizWeb.Core.Interfaces.Services;
+using ChemQuizWeb.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

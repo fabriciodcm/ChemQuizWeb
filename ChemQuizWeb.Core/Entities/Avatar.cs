@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ChemQuizWeb.Data
+namespace ChemQuizWeb.Core.Entities
 {
     public class Avatar
     {

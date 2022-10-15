@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ChemQuizWeb.Data
+namespace ChemQuizWeb.Core.Entities
 {
     [Table("Party")]
     public class Party

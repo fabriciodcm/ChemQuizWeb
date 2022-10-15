@@ -1,11 +1,9 @@
-﻿using ChemQuizWeb.Data;
-using ChemQuizWeb.Services;
+﻿using ChemQuizWeb.Core.Entities;
+using ChemQuizWeb.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace ChemQuizWeb.Controllers.API
 {

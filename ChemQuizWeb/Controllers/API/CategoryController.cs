@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ChemQuizWeb.Data;
-using ChemQuizWeb.Services;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.Collections.Generic;
+using ChemQuizWeb.Core.Entities;
+using ChemQuizWeb.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChemQuizWeb.Controllers.API

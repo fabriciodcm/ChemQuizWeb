@@ -1,4 +1,5 @@
-using ChemQuizWeb.Data;
+using ChemQuizWeb.Application;
+using ChemQuizWeb.Core.Entities;
 using ChemQuizWeb.Services;
 using ChemQuizWeb.Services.Implementations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -37,10 +38,10 @@ namespace ChemQuizWeb
             #endregion
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("ProdConnection")));
+                    Configuration.GetConnectionString("DevConnection")));
                     //Configuration.GetConnectionString("ProdConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDefaultIdentity<AppUser>(options =>
+            services.AddDefaultIdentity<ChemQuizWeb.Core.Entities.AppUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;  
                 options.Password.RequiredLength = 8;
@@ -88,9 +89,8 @@ namespace ChemQuizWeb
             //    x.JsonSerializerOptions.Re
             //);
 
-            services.AddScoped<IService<Avatar>, AvatarService>();
-            services.AddScoped<IService<Category>, CategoryService>();
-            services.AddScoped<IGameService, GameService>();
+            //Dependency Injection
+            services.AddApplication();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

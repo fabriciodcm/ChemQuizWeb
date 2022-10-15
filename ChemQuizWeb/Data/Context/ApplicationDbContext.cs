@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using ChemQuizWeb.Core.Entities.Configuration;
+using ChemQuizWeb.Core.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using System.Text;
 
-namespace ChemQuizWeb.Data
+namespace ChemQuizWeb.Core.Entities
 {
     public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
@@ -14,35 +17,7 @@ namespace ChemQuizWeb.Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder
-            .Entity<Party>()
-            .HasMany(p => p.Games)
-            .WithMany(p => p.Parties)
-            .UsingEntity<Dictionary<string, object>>(
-            "GameParty",
-            j => j
-            .HasOne<Game>()
-            .WithMany()
-            .HasForeignKey("GameId"),
-            j => j
-            .HasOne<Party>()
-            .WithMany()
-            .HasForeignKey("PartyId"));
-
-            builder
-            .Entity<Party>()
-            .HasMany(p => p.Users)
-            .WithMany(p => p.Parties)
-            .UsingEntity<Dictionary<string, object>>(
-            "UserParty",
-            j => j
-            .HasOne<AppUser>()
-            .WithMany()
-            .HasForeignKey("UserId"),
-            j => j
-            .HasOne<Party>()
-            .WithMany()
-            .HasForeignKey("PartyId"));
+            builder.ApplyConfiguration(new PartyConfiguration());
             base.OnModelCreating(builder);
         }
         public virtual DbSet<Avatar> Avatar { get; set; }

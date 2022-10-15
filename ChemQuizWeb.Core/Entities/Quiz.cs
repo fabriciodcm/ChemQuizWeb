@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ChemQuizWeb.Data
+namespace ChemQuizWeb.Core.Entities
 {
     [Table("Quiz")]
     public class Quiz
@@ -34,7 +34,7 @@ namespace ChemQuizWeb.Data
         public short CorrectAnswer { get; set; }
         [Required]
         [Display(Name = "Pontos")]
-        public int Points { get; set; }
+        public short Points { get; set; }
         public long LevelId { get; set; }
         [ForeignKey("LevelId")]
         public Level Level { get; set; }

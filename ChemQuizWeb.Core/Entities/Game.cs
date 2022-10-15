@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace ChemQuizWeb.Data
+namespace ChemQuizWeb.Core.Entities
 {
     public class Game
     {

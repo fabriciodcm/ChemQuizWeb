@@ -1,4 +1,5 @@
-﻿using ChemQuizWeb.Data;
+﻿using ChemQuizWeb.Core.Entities;
+using ChemQuizWeb.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

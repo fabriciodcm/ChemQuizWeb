@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ChemQuizWeb.Services
+namespace ChemQuizWeb.Core.Interfaces.Services
 {
     public interface IService<T>
     {

@@ -1,4 +1,4 @@
-﻿using ChemQuizWeb.Data;
+﻿using ChemQuizWeb.Core.Entities;
 using ChemQuizWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -105,7 +105,7 @@ namespace ChemQuizWeb.Controllers.API
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            var userExists = await userManager.FindByNameAsync(model.Username);
+            var userExists = await userManager.FindByEmailAsync(model.Email);
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
 
