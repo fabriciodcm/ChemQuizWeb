@@ -37,15 +37,6 @@ namespace ChemQuizWeb.Services.Implementations
             return _repository.List().Any(x => x.GameId == Id);
         }
 
-        public IEnumerable<Game> FindAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Game FindByID(long Id)
-        {
-            throw new NotImplementedException();
-        }
 
         public IEnumerable<Game> FindByParameters(string value, long? categoryid)
         {

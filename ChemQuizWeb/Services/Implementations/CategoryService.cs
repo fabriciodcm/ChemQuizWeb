@@ -18,15 +18,6 @@ namespace ChemQuizWeb.Services.Implementations
         {
             _repository = repository;
         }
-        public Category Create(Category t)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Category Delete(long Id)
-        {
-            throw new NotImplementedException();
-        }
 
         public bool Exists(long Id)
         {
@@ -34,20 +25,5 @@ namespace ChemQuizWeb.Services.Implementations
         }
 
         public IEnumerable<Category> FindAll()  => _repository.List().ToList();
-       
-        public Category FindByID(long Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Category Update(Category t)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IService<Category>.Delete(long Id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace ChemQuizWeb.Core.Interfaces.Services
 {
-    public interface IGameService : IService<Game>
+    public interface IGameService
     {
         IEnumerable<Game> FindByParameters(string value, long? CategoryId);
-        public Task<List<Game>> FindByUser(string UserId);
-        public Task<Game?> FindByUser(long GameId, string UserId);
+        Task<List<Game>> FindByUser(string UserId);
+        Task<Game> FindByUser(long GameId, string UserId);
+        Game Create(Game game);
+        void Delete(long Id);
+        bool Exists(long Id);
+        Game Update(Game game);
     }
 }

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace ChemQuizWeb.Core.Interfaces.Services
 {
-    public interface ICategoryService : IService<Category>
+    public interface ICategoryService
     {
+        bool Exists(long Id);
+        IEnumerable<Category> FindAll();
     }
 }
