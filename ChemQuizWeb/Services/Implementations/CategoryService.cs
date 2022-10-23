@@ -5,16 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChemQuizWeb.Infrastructure.Persistence.Repositories;
+using ChemQuizWeb.Core.Interfaces.Repositories;
 
 namespace ChemQuizWeb.Services.Implementations
 {
-    public class CategoryService : IService<Category>
+    public class CategoryService : ICategoryService
     {
-        private ApplicationDbContext Context;
+        private readonly ICategoryRepository _repository;
 
-        public CategoryService(ApplicationDbContext Context)
+        public CategoryService(ICategoryRepository repository)
         {
-            this.Context = Context;
+            _repository = repository;
         }
         public Category Create(Category t)
         {
@@ -26,7 +28,12 @@ namespace ChemQuizWeb.Services.Implementations
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Category> FindAll()  => Context.Category.ToList();
+        public bool Exists(long Id)
+        {
+            return _repository.List().Any(x => x.CategoryId == Id);
+        }
+
+        public IEnumerable<Category> FindAll()  => _repository.List().ToList();
        
         public Category FindByID(long Id)
         {
@@ -34,6 +41,11 @@ namespace ChemQuizWeb.Services.Implementations
         }
 
         public Category Update(Category t)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IService<Category>.Delete(long Id)
         {
             throw new NotImplementedException();
         }

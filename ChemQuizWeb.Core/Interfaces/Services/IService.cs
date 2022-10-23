@@ -11,6 +11,7 @@ namespace ChemQuizWeb.Core.Interfaces.Services
         T FindByID(long Id);
         IEnumerable<T> FindAll();
         T Update(T t);
-        T Delete(long Id);
+        void Delete(long Id);
+        bool Exists(long Id);
     }
 }

@@ -8,6 +8,8 @@ namespace ChemQuizWeb.Core.Interfaces.Services
 {
     public interface IGameService : IService<Game>
     {
-        IEnumerable<Game> FindByParameters(string value, long? categoryid);
+        IEnumerable<Game> FindByParameters(string value, long? CategoryId);
+        public Task<List<Game>> FindByUser(string UserId);
+        public Task<Game?> FindByUser(long GameId, string UserId);
     }
 }

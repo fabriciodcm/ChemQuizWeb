@@ -1,7 +1,5 @@
 using ChemQuizWeb.Application;
-using ChemQuizWeb.Core.Entities;
-using ChemQuizWeb.Services;
-using ChemQuizWeb.Services.Implementations;
+using ChemQuizWeb.Infrastructure.Persistence.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

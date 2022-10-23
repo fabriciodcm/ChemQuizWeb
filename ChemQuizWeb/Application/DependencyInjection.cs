@@ -1,9 +1,8 @@
-﻿using ChemQuizWeb.Core.Entities;
-using ChemQuizWeb.Services.Implementations;
-using ChemQuizWeb.Services;
+﻿using ChemQuizWeb.Services.Implementations;
 using Microsoft.Extensions.DependencyInjection;
-using ChemQuizWeb.Core.Entities;
 using ChemQuizWeb.Core.Interfaces.Services;
+using ChemQuizWeb.Infrastructure.Persistence.Repositories;
+using ChemQuizWeb.Core.Interfaces.Repositories;
 
 namespace ChemQuizWeb.Application
 {
@@ -11,9 +10,16 @@ namespace ChemQuizWeb.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<IService<Avatar>, AvatarService>();
-            services.AddScoped<IService<Category>, CategoryService>();
+            #region Services
+            services.AddScoped<IAvatarService, AvatarService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IGameService, GameService>();
+            #endregion
+            #region Repositories
+            services.AddScoped<IGameRepository, GameRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IAvatarRepository, AvatarRepository>();
+            #endregion
 
             return services;
         }

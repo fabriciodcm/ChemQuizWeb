@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChemQuizWeb.Core\ChemQuizWeb.Core.csproj" />
+    <ProjectReference Include="..\ChemQuizWeb.Infrastructure\ChemQuizWeb.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,29 +1,27 @@
 ﻿using ChemQuizWeb.Core.Entities;
+using ChemQuizWeb.Core.Interfaces.Repositories;
 using ChemQuizWeb.Core.Interfaces.Services;
-using ChemQuizWeb.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ChemQuizWeb.Services.Implementations
 {
-    public class AvatarService : IService<Avatar>
+    public class AvatarService : IAvatarService
     {
 
-        private ApplicationDbContext Context;
+        private IAvatarRepository _repository;
 
-        public AvatarService(ApplicationDbContext Context)
+        public AvatarService(IAvatarRepository repository)
         {
-            this.Context = Context;
+            this._repository = repository;
         }
 
         public Avatar Create(Avatar avatar)
         {
             try
             {
-                Context.Add(avatar);
-                Context.SaveChanges();
+                _repository.Add(avatar);
             }
             catch (Exception ex)
             {
@@ -32,58 +30,47 @@ namespace ChemQuizWeb.Services.Implementations
             return avatar;
         }
 
-        public Avatar Delete(long Id)
+        public void Delete(long Id)
         {
-            var result = Context.Avatar.SingleOrDefault(x => x.AvatarId == Id);
-            if (result != null)
+            try
             {
-                try
-                {
-                    Context.Avatar.Remove(result);
-                    Context.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+                Avatar avatar = _repository.Find(Id);
+                _repository.Remove(avatar);
             }
-            return result;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public IEnumerable<Avatar> FindAll()
         {
-            return Context.Avatar.ToList();
+            return _repository.List().ToList();
         }
 
         public Avatar FindByID(long Id)
         {
-            return Context.Avatar
-                .SingleOrDefault(x => x.AvatarId.Equals(Id));
+            return _repository.Find(Id);
         }
 
         public Avatar Update(Avatar avatar)
         {
             if (!Exists(avatar.AvatarId)) return null;
-            var result = Context.Avatar.SingleOrDefault(x => x.AvatarId == avatar.AvatarId);
-            if (result != null)
+            try
             {
-                try
-                {
-                    //verificar se nao precisa usar USING
-                    Context.Entry(result).CurrentValues.SetValues(avatar);
-                    Context.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+                _repository.Edit(avatar);
             }
-            return result;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return avatar;
         }
 
         public bool Exists(long Id)
         {
-            return Context.Avatar.Any(x => x.AvatarId.Equals(Id));
+            return _repository.List().Any(x => x.AvatarId.Equals(Id));
         }
 
     }

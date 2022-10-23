@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using ChemQuizWeb.Core.Entities;
 
-namespace ChemQuizWeb.Core.Entities.Configuration
+namespace ChemQuizWeb.Infrastructure.Persistence.Configurations
 {
     public class PartyConfiguration : IEntityTypeConfiguration<Party>
     {

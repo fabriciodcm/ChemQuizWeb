@@ -1,7 +1,9 @@
 ﻿using ChemQuizWeb.Core.Entities;
+using ChemQuizWeb.Core.Interfaces.Repositories;
 using ChemQuizWeb.Core.Interfaces.Services;
-using ChemQuizWeb.Core.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Core.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +13,28 @@ namespace ChemQuizWeb.Services.Implementations
 {
     public class GameService : IGameService
     {
-        private ApplicationDbContext Context;
+        private IGameRepository _repository;
 
-        public GameService(ApplicationDbContext Context)
+        public GameService(IGameRepository repository)
         {
-            this.Context = Context;
+            this._repository = repository;
         }
 
-        public Game Create(Game t)
+        public Game Create(Game game)
         {
-            throw new NotImplementedException();
+            _repository.Add(game);
+            return game;
         }
 
-        public Game Delete(long Id)
+        public void Delete(long Id)
         {
-            throw new NotImplementedException();
+            if (Exists(Id))
+                _repository.Remove(_repository.Find(Id));
+        }
+
+        public bool Exists(long Id)
+        {
+            return _repository.List().Any(x => x.GameId == Id);
         }
 
         public IEnumerable<Game> FindAll()
@@ -43,7 +52,7 @@ namespace ChemQuizWeb.Services.Implementations
             List<Game> games = new List<Game>();
             if (!String.IsNullOrEmpty(value))
             {
-                var query = Context.Game
+                var query = _repository.List()
                      .Include(x => x.Author)
                      .Where(x => x.GameName.Contains(value) || x.GameDescription.Contains(value)
                      || x.Author.Email.Contains(value));
@@ -55,9 +64,29 @@ namespace ChemQuizWeb.Services.Implementations
             return games;
         }
 
-        public Game Update(Game t)
+        public Task<List<Game>> FindByUser(string UserId)
         {
-            throw new NotImplementedException();
+            return _repository.List()
+                .Include(g => g.Author)
+                .Include(g => g.Category)
+                .Where(x => x.AuthorId == UserId).ToListAsync();
+        }
+
+        public Task<Game> FindByUser(long GameId, string UserId)
+        {
+            return _repository.List()
+                .Include(g => g.Author)
+                .Include(g => g.Category)
+                .Include(g => g.Levels)
+                .Where(g => g.AuthorId == UserId)
+                .FirstOrDefaultAsync(m => m.GameId == GameId);
+        }
+
+        public Game Update(Game game)
+        {
+            if (Exists(game.GameId))
+                _repository.Edit(game);
+            return game;
         }
     }
 }

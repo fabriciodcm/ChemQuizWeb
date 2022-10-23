@@ -1,13 +1,9 @@
-﻿using ChemQuizWeb.Core.Entities.Configuration;
+﻿using ChemQuizWeb.Infrastructure.Persistence.Configurations;
 using ChemQuizWeb.Core.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Reflection.Emit;
-using System.Text;
 
-namespace ChemQuizWeb.Core.Entities
+namespace ChemQuizWeb.Infrastructure.Persistence.Context
 {
     public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
@@ -20,6 +16,8 @@ namespace ChemQuizWeb.Core.Entities
             builder.ApplyConfiguration(new PartyConfiguration());
             base.OnModelCreating(builder);
         }
+        
+
         public virtual DbSet<Avatar> Avatar { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Game> Game { get; set; }

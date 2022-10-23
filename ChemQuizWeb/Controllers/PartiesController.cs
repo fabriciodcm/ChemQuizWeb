@@ -9,6 +9,7 @@ using ChemQuizWeb.Core.Entities;
 using ChemQuizWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using ChemQuizWeb.Core.Entities;
+using ChemQuizWeb.Infrastructure.Persistence.Context;
 
 namespace ChemQuizWeb.Controllers
 {

@@ -8,30 +8,28 @@ using Microsoft.EntityFrameworkCore;
 using ChemQuizWeb.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using ChemQuizWeb.Core.Entities;
+using ChemQuizWeb.Core.Interfaces.Services;
 
 namespace ChemQuizWeb.Controllers
 {
     [Authorize]
     public class GamesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IGameService _service;
+        private readonly ICategoryService _categoryService;
         private readonly UserManager<AppUser> _userManager;
 
-        public GamesController(ApplicationDbContext context, UserManager<AppUser> userManager)
+        public GamesController(IGameService service, ICategoryService categoryService, UserManager<AppUser> userManager)
         {
-            _context = context;
+            _service = service;
             _userManager = userManager;
+            _categoryService = categoryService;
         }
 
         // GET: Games
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Game
-                .Include(g => g.Author)
-                .Include(g => g.Category)
-                .Where(x => x.AuthorId == _userManager.GetUserId(this.User));
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _service.FindByUser(_userManager.GetUserId(this.User)));
         }
 
         // GET: Games/Details/5
@@ -42,12 +40,7 @@ namespace ChemQuizWeb.Controllers
                 return NotFound();
             }
 
-            var game = await _context.Game
-                .Include(g => g.Author)
-                .Include(g => g.Category)
-                .Include(g => g.Levels)
-                .Where(g => g.AuthorId == _userManager.GetUserId(this.User))
-                .FirstOrDefaultAsync(m => m.GameId == id);
+            var game = await _service.FindByUser(id.Value, _userManager.GetUserId(this.User));
             if (game == null)
             {
                 return NotFound();
@@ -59,7 +52,7 @@ namespace ChemQuizWeb.Controllers
         // GET: Games/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName");
+            ViewData["CategoryId"] = new SelectList(_categoryService.FindAll(), "CategoryId", "CategoryName");
             return View();
         }
 
@@ -73,11 +66,10 @@ namespace ChemQuizWeb.Controllers
             game.AuthorId = _userManager.GetUserId(this.User);
             if (ModelState.IsValid)
             {
-                _context.Add(game);
-                await _context.SaveChangesAsync();
+                _service.Create(game);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName", game.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_categoryService.FindAll(), "CategoryId", "CategoryName", game.CategoryId);
             return View(game);
         }
 
@@ -89,12 +81,12 @@ namespace ChemQuizWeb.Controllers
                 return NotFound();
             }
 
-            var game = await _context.Game.FindAsync(id);
+            var game = await _service.FindByUser(id.Value, _userManager.GetUserId(this.User));
             if (game == null)
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName", game.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_categoryService.FindAll(), "CategoryId", "CategoryName", game.CategoryId);
             return View(game);
         }
 
@@ -105,22 +97,22 @@ namespace ChemQuizWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long id, [Bind("GameId,GameName,GameDescription,CategoryId,AuthorId")] Game game)
         {
-            game.AuthorId = _userManager.GetUserId(this.User);
             if (id != game.GameId)
-            {
                 return NotFound();
-            }
+
+            var isGameAuthor = await _service.FindByUser(id, game.AuthorId);
+            if (isGameAuthor == null || isGameAuthor.AuthorId != _userManager.GetUserId(this.User))
+                return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(game);
-                    await _context.SaveChangesAsync();
+                    _service.Update(game);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!GameExists(game.GameId))
+                    if (!_service.Exists(game.GameId))
                     {
                         return NotFound();
                     }
@@ -131,8 +123,8 @@ namespace ChemQuizWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName", game.CategoryId);
-            return View(game);
+            ViewData["CategoryId"] = new SelectList(_categoryService.FindAll(), "CategoryId", "CategoryName", game.CategoryId);
+            return View(await _service.FindByUser(id, _userManager.GetUserId(this.User)));
         }
 
         // GET: Games/Delete/5
@@ -143,11 +135,7 @@ namespace ChemQuizWeb.Controllers
                 return NotFound();
             }
 
-            var game = await _context.Game
-                .Include(g => g.Author)
-                .Include(g => g.Category)
-                .Where(g => g.AuthorId == _userManager.GetUserId(this.User))
-                .FirstOrDefaultAsync(m => m.GameId == id);
+            var game = await _service.FindByUser(id.Value, _userManager.GetUserId(this.User));
             if (game == null)
             {
                 return NotFound();
@@ -161,15 +149,8 @@ namespace ChemQuizWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var game = await _context.Game.FindAsync(id);
-            _context.Game.Remove(game);
-            await _context.SaveChangesAsync();
+            _service.Delete(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool GameExists(long id)
-        {
-            return _context.Game.Any(e => e.GameId == id);
         }
     }
 }
