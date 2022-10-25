@@ -50,7 +50,6 @@ namespace ChemQuizWeb.Services.Implementations
                 if (categoryid.HasValue)
                     query.Where(x => x.CategoryId == categoryid.Value);
                 games = query.Take(10).ToList();
-                games.ForEach(x => x.author = x.Author.Email);
             }
             return games;
         }
@@ -60,6 +59,7 @@ namespace ChemQuizWeb.Services.Implementations
             return _repository.List()
                 .Include(g => g.Author)
                 .Include(g => g.Category)
+                .Include(g => g.Levels)
                 .Where(x => x.AuthorId == UserId).ToListAsync();
         }
 

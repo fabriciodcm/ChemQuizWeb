@@ -6,11 +6,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ChemQuizWeb.Models
+namespace ChemQuizWeb.Models.ViewModels
 {
     public class PartyGameViewModel
     {
-        public PartyGameViewModel(Party party, Game game) 
+        public PartyGameViewModel(Party party, Game game)
         {
             GameId = game.GameId;
             GameName = game.GameName;

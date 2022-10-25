@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ChemQuizWeb.Core.Entities;
-using ChemQuizWeb.Models;
+using ChemQuizWeb.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using ChemQuizWeb.Core.Entities;
 using ChemQuizWeb.Infrastructure.Persistence.Context;
 
 namespace ChemQuizWeb.Controllers

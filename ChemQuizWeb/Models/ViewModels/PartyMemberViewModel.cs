@@ -6,11 +6,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ChemQuizWeb.Models
+namespace ChemQuizWeb.Models.ViewModels
 {
     public class PartyMemberViewModel
     {
-        public PartyMemberViewModel(Party party, AppUser member) 
+        public PartyMemberViewModel(Party party, AppUser member)
         {
             PartyId = party.PartyId;
             PartyName = party.PartyName;

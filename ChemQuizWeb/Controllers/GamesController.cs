@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +6,9 @@ using ChemQuizWeb.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using ChemQuizWeb.Core.Interfaces.Services;
+using ChemQuizWeb.Models.InputModels;
+using ChemQuizWeb.Models.ViewModels;
+using System.Linq;
 
 namespace ChemQuizWeb.Controllers
 {
@@ -29,7 +29,9 @@ namespace ChemQuizWeb.Controllers
         // GET: Games
         public async Task<IActionResult> Index()
         {
-            return View(await _service.FindByUser(_userManager.GetUserId(this.User)));
+            var gameViewModels = from game in await _service.FindByUser(_userManager.GetUserId(this.User))
+                                 select new GameViewModel(game);
+            return View(gameViewModels);
         }
 
         // GET: Games/Details/5
@@ -46,7 +48,7 @@ namespace ChemQuizWeb.Controllers
                 return NotFound();
             }
 
-            return View(game);
+            return View(new GameViewModel(game));
         }
 
         // GET: Games/Create
@@ -61,12 +63,12 @@ namespace ChemQuizWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GameId,GameName,GameDescription,CategoryId,AuthorId")] Game game)
+        public async Task<IActionResult> Create([Bind("GameId,GameName,GameDescription,CategoryId,AuthorId")] GameInputModel game)
         {
             game.AuthorId = _userManager.GetUserId(this.User);
             if (ModelState.IsValid)
             {
-                _service.Create(game);
+                _service.Create(game.FromInputModel());
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoryId"] = new SelectList(_categoryService.FindAll(), "CategoryId", "CategoryName", game.CategoryId);
@@ -81,7 +83,7 @@ namespace ChemQuizWeb.Controllers
                 return NotFound();
             }
 
-            var game = await _service.FindByUser(id.Value, _userManager.GetUserId(this.User));
+            GameViewModel game = new GameViewModel(await _service.FindByUser(id.Value, _userManager.GetUserId(this.User)));
             if (game == null)
             {
                 return NotFound();
@@ -95,20 +97,20 @@ namespace ChemQuizWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("GameId,GameName,GameDescription,CategoryId,AuthorId")] Game game)
+        public async Task<IActionResult> Edit(long id, [Bind("GameId,GameName,GameDescription,CategoryId,AuthorId")] GameInputModel game)
         {
             if (id != game.GameId)
                 return NotFound();
 
-            var isGameAuthor = await _service.FindByUser(id, game.AuthorId);
-            if (isGameAuthor == null || isGameAuthor.AuthorId != _userManager.GetUserId(this.User))
+            var persistedGame = await _service.FindByUser(id, game.AuthorId);
+            if (persistedGame == null || persistedGame.AuthorId != _userManager.GetUserId(this.User))
                 return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _service.Update(game);
+                    _service.Update(game.FromInputModel(persistedGame));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,7 +126,8 @@ namespace ChemQuizWeb.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoryId"] = new SelectList(_categoryService.FindAll(), "CategoryId", "CategoryName", game.CategoryId);
-            return View(await _service.FindByUser(id, _userManager.GetUserId(this.User)));
+            var gameViewModel = new GameViewModel(await _service.FindByUser(id, _userManager.GetUserId(this.User)));
+            return View(gameViewModel);
         }
 
         // GET: Games/Delete/5
@@ -135,7 +138,7 @@ namespace ChemQuizWeb.Controllers
                 return NotFound();
             }
 
-            var game = await _service.FindByUser(id.Value, _userManager.GetUserId(this.User));
+            GameViewModel game = new GameViewModel(await _service.FindByUser(id.Value, _userManager.GetUserId(this.User)));
             if (game == null)
             {
                 return NotFound();

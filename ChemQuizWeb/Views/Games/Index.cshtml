@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ChemQuizWeb.Core.Entities.Game>
+﻿@model IEnumerable<ChemQuizWeb.Models.ViewModels.GameViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -44,10 +44,10 @@
                 @Html.DisplayFor(modelItem => item.GameDescription)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Author.UserName)
+                @Html.DisplayFor(modelItem => item.Author)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.GameId">Alterar</a> |

@@ -31,7 +31,5 @@ namespace ChemQuizWeb.Core.Entities
         public AppUser Author { get; set; }
         public ICollection<Party> Parties { get; set; } 
         public ICollection<Level> Levels { get; set; } 
-        [NotMapped]
-        public string author { get; set; }
     }
 }

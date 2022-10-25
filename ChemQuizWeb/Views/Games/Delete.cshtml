@@ -1,4 +1,4 @@
-﻿@model ChemQuizWeb.Core.Entities.Game
+﻿@model ChemQuizWeb.Models.ViewModels.GameViewModel
 
 @{
     ViewData["Title"] = "Excluir";
@@ -28,13 +28,13 @@
             @Html.DisplayNameFor(model => model.Category)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category.CategoryName)
+            @Html.DisplayFor(model => model.Category)
         </dd class>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Author)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Author.UserName)
+            @Html.DisplayFor(model => model.Author)
         </dd class>
     </dl>
     

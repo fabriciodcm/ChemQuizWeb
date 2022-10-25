@@ -1,6 +1,6 @@
 using System;
 
-namespace ChemQuizWeb.Models
+namespace ChemQuizWeb.Models.ViewModels
 {
     public class ErrorViewModel
     {
