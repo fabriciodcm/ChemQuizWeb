@@ -14,6 +14,7 @@ namespace ChemQuizWeb.Application
             services.AddScoped<IAvatarService, AvatarService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IGameService, GameService>();
+            services.AddScoped<IPartyService, PartyService>();
             #endregion
             #region Repositories
             services.AddScoped<IGameRepository, GameRepository>();

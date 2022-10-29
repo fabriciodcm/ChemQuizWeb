@@ -1,9 +1,11 @@
-﻿using ChemQuizWeb.Core.Entities;
-using ChemQuizWeb.Core.Interfaces.Services;
+﻿using ChemQuizWeb.Core.Interfaces.Services;
+using ChemQuizWeb.Models.ViewModels;
+using ChemQuizWeb.Services.Implementations;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace ChemQuizWeb.Controllers.API
 {
@@ -20,10 +22,12 @@ namespace ChemQuizWeb.Controllers.API
 
         [HttpGet]
         [Route("search/{value}/{categoryid}")]
-        [ProducesResponseType(typeof(List<Game>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<GameViewModel>), StatusCodes.Status200OK)]
         public IActionResult Get(string value, long? categoryid) 
         {
-            return Ok(gameService.FindByParameters(value,categoryid));
+            var games = from game in gameService.FindByParameters(value, categoryid)
+                                        select new GameViewModel(game);
+            return Ok(games.ToList());
         } 
     }
 }
